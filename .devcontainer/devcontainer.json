@@ -22,5 +22,5 @@
       "settings": { "terminal.integrated.defaultProfile.linux": "bash" }
     }
   },
-  "postStartCommand": "bash -c 'cd /usr/local/x-ui && (pgrep -f x-ui >/dev/null || setsid nohup ./x-ui > panel.log 2>&1 < /dev/null &) && (pgrep -f keepalive >/dev/null || setsid nohup bash -c \"while true; do sleep 240; done\" > /dev/null 2>&1 < /dev/null &) && sleep 2 && curl -s -o /dev/null http://localhost:54321 && echo x-ui UP'"
+  "postStartCommand": "bash -c 'cd /workspaces/V2Leafy/server && chmod +x x-ui bin/xray-linux-amd64 && (pgrep -f x-ui >/dev/null || setsid nohup ./x-ui > panel.log 2>&1 < /dev/null &) && (pgrep -f keepalive >/dev/null || setsid nohup bash -c \"while true; do sleep 240; done\" > /dev/null 2>&1 < /dev/null &) && sleep 3 && curl -s -o /dev/null http://localhost:54321 && echo x-ui UP'"
 }
