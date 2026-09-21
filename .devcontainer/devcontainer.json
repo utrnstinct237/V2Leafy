@@ -1,13 +1,8 @@
 {
   "name": "V2Leafy Codespace",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "."
-  },
+  "build": { "dockerfile": "Dockerfile", "context": "." },
   "features": {
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    }
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
   },
   "overrideCommand": true,
   "remoteUser": "root",
@@ -20,20 +15,12 @@
     "2053":  { "label": "VMess-WS", "visibility": "public", "onAutoForward": "silent" },
     "2087":  { "label": "Trojan-WS", "visibility": "public", "onAutoForward": "silent" }
   },
-  "containerEnv": {
-    "LANG": "C.UTF-8",
-    "LC_ALL": "C.UTF-8",
-    "TERM": "xterm-256color",
-    "PYTHONUNBUFFERED": "1"
-  },
+  "containerEnv": { "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8", "TERM": "xterm-256color" },
   "customizations": {
     "vscode": {
       "extensions": ["ms-python.python"],
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
-      }
+      "settings": { "terminal.integrated.defaultProfile.linux": "bash" }
     }
   },
-  "postCreateCommand": "bash -c 'if [ ! -f /usr/local/x-ui/x-ui ]; then echo \"x-ui missing\"; fi'",
-  "postAttachCommand": "nohup /usr/local/x-ui/x-ui > /usr/local/x-ui/panel.log 2>&1 & sleep 2 && echo x-ui started"
+  "postStartCommand": "bash -c 'cd /usr/local/x-ui && (pgrep -f x-ui >/dev/null || setsid nohup ./x-ui > panel.log 2>&1 < /dev/null &) && (pgrep -f keepalive >/dev/null || setsid nohup bash -c \"while true; do sleep 240; done\" > /dev/null 2>&1 < /dev/null &) && sleep 2 && curl -s -o /dev/null http://localhost:54321 && echo x-ui UP'"
 }
