@@ -11,20 +11,20 @@
   },
   "overrideCommand": true,
   "remoteUser": "root",
-  "forwardPorts": [8080],
+  "forwardPorts": [54321, 2096, 443, 8443, 2053, 2087],
   "portsAttributes": {
-    "8080": {
-      "label": "V2Leafy Panel, Subscription & VLESS",
-      "visibility": "public",
-      "onAutoForward": "silent"
-    }
+    "54321": { "label": "3x-ui Panel", "visibility": "public", "onAutoForward": "silent" },
+    "2096":  { "label": "Subscription", "visibility": "public", "onAutoForward": "silent" },
+    "443":   { "label": "VLESS-WS", "visibility": "public", "onAutoForward": "silent" },
+    "8443":  { "label": "VLESS-XHTTP", "visibility": "public", "onAutoForward": "silent" },
+    "2053":  { "label": "VMess-WS", "visibility": "public", "onAutoForward": "silent" },
+    "2087":  { "label": "Trojan-WS", "visibility": "public", "onAutoForward": "silent" }
   },
   "containerEnv": {
     "LANG": "C.UTF-8",
     "LC_ALL": "C.UTF-8",
     "TERM": "xterm-256color",
-    "PYTHONUNBUFFERED": "1",
-    "PORT": "8080"
+    "PYTHONUNBUFFERED": "1"
   },
   "customizations": {
     "vscode": {
@@ -34,6 +34,6 @@
       }
     }
   },
-  "postCreateCommand": "gh auth status || true",
-  "postAttachCommand": "python main.py"
+  "postCreateCommand": "bash -c 'if [ ! -f /usr/local/x-ui/x-ui ]; then echo \"x-ui missing\"; fi'",
+  "postAttachCommand": "nohup /usr/local/x-ui/x-ui > /usr/local/x-ui/panel.log 2>&1 & sleep 2 && echo x-ui started"
 }
